@@ -3,7 +3,7 @@ import static java.lang.Math.*;
 import static java.lang.System.out;
 
 public class LabWork1_4 {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         class Sync {
             volatile double x = 1d;
             volatile boolean phase = true;
@@ -13,7 +13,7 @@ public class LabWork1_4 {
         Thread t0 = new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 synchronized (sync) {
-                    while(!sync.phase) {
+                    if(!sync.phase) {
                         try {
                             sync.wait();
                         } catch (InterruptedException e) {
@@ -32,7 +32,7 @@ public class LabWork1_4 {
         Thread t1 = new Thread(() -> {
             for (int i = 0; i < 10; i++) {
                 synchronized (sync) {
-                    while (sync.phase) {
+                    if(sync.phase) {
                         try {
                             sync.wait();
                         } catch (InterruptedException e) {
